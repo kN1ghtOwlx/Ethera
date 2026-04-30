@@ -11,10 +11,7 @@ dotenv.config();
 const app = express();
 
 app.use(cors({
-    origin: [
-      "http://localhost:3000",
-      "https://ethera-chi.vercel.app"
-    ],
+    origin: [process.env.FRONTEND_URL, "http://localhost:3000"],
     credentials: true
   }));
 
