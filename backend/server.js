@@ -10,22 +10,13 @@ dotenv.config();
 
 const app = express();
 
-const allowedOrigins = [
-  "http://localhost:3000",
-  "http://localhost:5173",
-  process.env.FRONTEND_URL
-];
-
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("CORS not allowed"));
-    }
-  },
-  credentials: true
-}));
+    origin: [
+      "http://localhost:3000",
+      "https://ethera-chi.vercel.app"
+    ],
+    credentials: true
+  }));
 
 app.use(express.json());
 
