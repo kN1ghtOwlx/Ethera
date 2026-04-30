@@ -25,7 +25,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/tasks', taskRoutes);
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 8080;
 
 connectDB().then(() => {
   app.listen(PORT, () => {
