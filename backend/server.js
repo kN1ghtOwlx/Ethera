@@ -10,11 +10,28 @@ dotenv.config();
 
 const app = express();
 
+const allowedOrigins = [
+  "http://localhost:3000",
+  "http://localhost:5173",
+  process.env.FRONTEND_URL
+];
+
 app.use(cors({
-    origin: process.env.FRONTEND_URL.split(","),
-    credentials: true
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("CORS not allowed"));
+    }
+  },
+  credentials: true
 }));
+
 app.use(express.json());
+
+app.get('/', (req,res)=>{
+    res.send("API Running");
+});
 
 app.use('/api/auth', authRoutes);
 app.use('/api/projects', projectRoutes);
@@ -23,7 +40,7 @@ app.use('/api/tasks', taskRoutes);
 const PORT = process.env.PORT || 3001;
 
 connectDB().then(() => {
-    app.listen(PORT, () => {
-        console.log(`Server running on port ${PORT}`);
-    });
-})
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+});
